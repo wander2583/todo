@@ -20,4 +20,4 @@ const colors = {
   }
 }
 
-export defaul extendTheme({ config, colors})
+export default extendTheme({ config, colors})

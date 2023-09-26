@@ -6,7 +6,8 @@ import Animated, {
   useSharedValue,
   withTiming
 } from 'react-native-reanimated'
-import Svg, { Path } from 'react-native-svg'
+import Svg, { ClipPath, Defs, Path } from 'react-native-svg'
+import AnimatedStroke from './animated-stroke'
 
 const MARGIN = 10
 const vWidth = 64 + MARGIN
@@ -58,6 +59,16 @@ const AnimatedCheckbox = (props: Props) => {
     <Svg
       viewBox={[-MARGIN, -MARGIN, vWidth + MARGIN, vHeight + MARGIN].join(' ')}
     >
+      <Defs>
+        <ClipPath id="clipPath">
+          <Path
+            fill="while"
+            stroke="gray"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+          />
+        </ClipPath>
+      </Defs>
       <AnimatedPath
         d={outlineBoxPath}
         strokeWidth={7}
@@ -65,7 +76,15 @@ const AnimatedCheckbox = (props: Props) => {
         strokeLinecap="round"
         animatedProps={animatedBoxProps}
       />
-      <Path d={checkMarkPath} stroke="black" />
+      <AnimatedStroke
+        progress={progress}
+        d={checkMarkPath}
+        stroke={checkmarkColor}
+        strokeLinejoin="round"
+        strokeWidth={10}
+        strokeLinecap="round"
+        strokeOpacity={checked || false ? 1 : 0}
+      />
     </Svg>
   )
 }
